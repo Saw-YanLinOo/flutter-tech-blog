@@ -54,9 +54,10 @@ class _HomeWindowScreenState extends State<HomeWindowScreen> {
                       height: 20,
                     ),
                     BlogListView(),
-                    Row(
-                      children: [],
+                    SizedBox(
+                      height: 20,
                     ),
+                    WindowFooterSection(),
                   ],
                 ),
               ),
@@ -77,6 +78,63 @@ class _HomeWindowScreenState extends State<HomeWindowScreen> {
   }
 }
 
+class WindowFooterSection extends StatelessWidget {
+  const WindowFooterSection({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: context.width * 0.12,
+      color: Theme.of(context).shadowColor,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 40,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      "YanYan Tech Blog",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    Text(
+                      " © 2023",
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontSize: 14,
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                  "Power by Flutter",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                Text("                                      "),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class SearchView extends StatelessWidget {
   const SearchView({
     super.key,
@@ -91,55 +149,61 @@ class SearchView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Visibility(
       visible: isSearch ?? false,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-        child: Column(
-          children: [
-            SizedBox(
-              height: context.height * 0.2,
-            ),
-            Container(
-              width: context.width * 0.4,
-              //height: 100,
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  isDense: true,
-                  border: InputBorder.none,
-                  hintText: "search posts, authers",
-                  contentPadding: const EdgeInsets.symmetric(
-                    vertical: 20,
-                    horizontal: 40,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: GestureDetector(
+              onTap: () {
+                onTapCancel();
+              },
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black.withOpacity(0.5),
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 3, sigmaY: 3),
+                  child: SizedBox(
+                    width: double.infinity,
+                    height: double.infinity,
                   ),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 20),
-                    child: Icon(
-                      Icons.search,
-                      size: 26,
-                    ),
-                  ),
-                  suffixIcon: Padding(
-                    padding: const EdgeInsets.only(right: 10),
-                    child: IconButton(
-                      onPressed: () {
-                        onTapCancel();
-                      },
-                      icon: Icon(
-                        Icons.cancel_rounded,
-                        size: 26,
-                      ),
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Theme.of(context).scaffoldBackgroundColor,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Container(
+              margin: EdgeInsets.only(top: context.width * 0.2),
+              child: Container(
+                width: context.width * 0.4,
+                clipBehavior: Clip.hardEdge,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: TextField(
+                  decoration: InputDecoration(
+                    isDense: true,
+                    border: InputBorder.none,
+                    hintText: "search posts, authers",
+                    contentPadding: const EdgeInsets.symmetric(
+                      vertical: 20,
+                      horizontal: 40,
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.only(left: 30, right: 20),
+                      child: Icon(
+                        Icons.search,
+                        size: 26,
+                      ),
+                    ),
+                    filled: true,
+                    fillColor: Theme.of(context).scaffoldBackgroundColor,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
