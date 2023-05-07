@@ -1,7 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:techblog/domain/repository/tech_blog_repository.dart';
 import 'package:techblog/extensions/extensions.dart';
+import 'package:techblog/presentation/bloc/home/home_bloc.dart';
+import 'package:techblog/presentation/bloc/home/home_event.dart';
+import 'package:techblog/presentation/bloc/home/home_state.dart';
+import 'package:techblog/presentation/bloc/theme/theme_bloc.dart';
+import 'package:techblog/presentation/bloc/theme/theme_event.dart';
+import 'package:techblog/presentation/bloc/theme/theme_state.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
 import 'package:techblog/presentation/screens/widgets/blog_item_view.dart';
 
@@ -345,6 +353,39 @@ class HomeWindowAppBar extends StatelessWidget {
             Text("Sign in"),
             SizedBox(
               width: 20,
+            ),
+            BlocBuilder<ThemeBloc, ThemeState>(
+              builder: (context, state) {
+                if (state is GetThemeState) {
+                  var themeMode = state.themeMode;
+
+                  if (themeMode == ThemeMode.dark) {
+                    return InkWell(
+                      onTap: () {
+                        context
+                            .read<ThemeBloc>()
+                            .add(ChangeThemeEvent(themeMode: ThemeMode.light));
+                      },
+                      child: Icon(
+                        Icons.dark_mode,
+                      ),
+                    );
+                  } else {
+                    return InkWell(
+                      onTap: () {
+                        context
+                            .read<ThemeBloc>()
+                            .add(ChangeThemeEvent(themeMode: ThemeMode.dark));
+                      },
+                      child: Icon(
+                        Icons.light_mode,
+                      ),
+                    );
+                  }
+                } else {
+                  return SizedBox();
+                }
+              },
             ),
             Container(
               clipBehavior: Clip.hardEdge,
