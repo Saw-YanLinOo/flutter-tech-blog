@@ -53,7 +53,10 @@ class _HomeWindowScreenState extends State<HomeWindowScreen> {
                     SizedBox(
                       height: 20,
                     ),
-                    BlogListView()
+                    BlogListView(),
+                    Row(
+                      children: [],
+                    ),
                   ],
                 ),
               ),
@@ -286,13 +289,20 @@ class FeatureBlogItemView extends StatelessWidget {
   }
 }
 
-class HomeWindowAppBar extends StatelessWidget {
+class HomeWindowAppBar extends StatefulWidget {
   const HomeWindowAppBar({
     super.key,
     required this.onTapSearch,
   });
 
   final Function onTapSearch;
+
+  @override
+  State<HomeWindowAppBar> createState() => _HomeWindowAppBarState();
+}
+
+class _HomeWindowAppBarState extends State<HomeWindowAppBar> {
+  bool onHoverHome = false;
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -309,30 +319,32 @@ class HomeWindowAppBar extends StatelessWidget {
             SizedBox(
               width: 40,
             ),
-            Text(
-              "Home",
-              style: TextStyle(),
+            WindowNavItemView(
+              title: "Home",
+              onTap: () {
+                print("home");
+              },
             ),
             SizedBox(
               width: 20,
             ),
-            Text(
-              "Resourse",
-              style: TextStyle(),
+            WindowNavItemView(
+              title: "Resourse",
+              onTap: () {},
             ),
             SizedBox(
               width: 20,
             ),
-            Text(
-              "Favouries",
-              style: TextStyle(),
+            WindowNavItemView(
+              title: "Favouries",
+              onTap: () {},
             ),
             SizedBox(
               width: 20,
             ),
-            Text(
-              "Setting",
-              style: TextStyle(),
+            WindowNavItemView(
+              title: "Setting",
+              onTap: () {},
             ),
           ],
         ),
@@ -341,16 +353,12 @@ class HomeWindowAppBar extends StatelessWidget {
           children: [
             IconButton(
               onPressed: () {
-                onTapSearch();
+                widget.onTapSearch();
               },
               icon: Icon(
                 Icons.search,
               ),
             ),
-            SizedBox(
-              width: 20,
-            ),
-            Text("Sign in"),
             SizedBox(
               width: 20,
             ),
@@ -387,10 +395,17 @@ class HomeWindowAppBar extends StatelessWidget {
                 }
               },
             ),
+            SizedBox(
+              width: 20,
+            ),
+            Text("Sign in"),
+            SizedBox(
+              width: 20,
+            ),
             Container(
               clipBehavior: Clip.hardEdge,
               decoration: BoxDecoration(
-                color: Colors.grey.withAlpha(100),
+                color: Theme.of(context).focusColor,
                 borderRadius: BorderRadius.circular(40),
               ),
               child: Padding(
@@ -409,6 +424,48 @@ class HomeWindowAppBar extends StatelessWidget {
           ],
         ),
       ],
+    );
+  }
+}
+
+class WindowNavItemView extends StatefulWidget {
+  const WindowNavItemView({
+    super.key,
+    required this.title,
+    required this.onTap,
+  });
+
+  final String title;
+  final Function onTap;
+  @override
+  State<WindowNavItemView> createState() => _WindowNavItemViewState();
+}
+
+class _WindowNavItemViewState extends State<WindowNavItemView> {
+  bool onHover = false;
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        widget.onTap();
+      },
+      child: MouseRegion(
+        cursor: SystemMouseCursors.click,
+        onEnter: (event) {
+          onHover = true;
+          setState(() {});
+        },
+        onExit: (event) {
+          onHover = false;
+          setState(() {});
+        },
+        child: Text(
+          widget.title,
+          style: TextStyle(
+            fontSize: onHover ? 18 : 14,
+          ),
+        ),
+      ),
     );
   }
 }

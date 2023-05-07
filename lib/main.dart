@@ -9,7 +9,7 @@ import 'package:url_strategy/url_strategy.dart';
 
 void main() async {
   setPathUrlStrategy();
-  MySharePerference().init();
+  await MySharePerference().init();
   runApp(
     DevicePreview(
       enabled: false,
@@ -38,11 +38,12 @@ class MyApp extends StatelessWidget {
             locale: DevicePreview.locale(context),
             builder: DevicePreview.appBuilder,
             debugShowCheckedModeBanner: false,
-            themeMode: bloc.themeMode ?? ThemeMode.light,
+            themeMode: bloc.themeMode ?? ThemeMode.system,
             theme: ThemeData.light(
               useMaterial3: true,
             ),
             darkTheme: ThemeData.dark(
+            
               useMaterial3: true,
             ),
             home: const HomeScreen(),
