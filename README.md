@@ -1,6 +1,10 @@
 # techblog
 
-A new Flutter project.
+TechBlog project for Web & Mobile. Shared useful article for daliy. Make with flutter 
+
+## url
+
+web - https://flutter-tech-blog.vercel.app
 
 ## Getting Started
 
