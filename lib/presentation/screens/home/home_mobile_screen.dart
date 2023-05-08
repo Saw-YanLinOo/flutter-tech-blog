@@ -3,10 +3,15 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/extensions/extensions.dart';
 import 'package:techblog/presentation/screens/home/home_window_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
-import 'package:techblog/presentation/screens/widgets/blog_item_view.dart';
+import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+
+import '../../bloc/home/blog_bloc.dart';
+import '../../bloc/home/blog_state.dart';
+import '../widgets/custom_loading_view.dart';
 
 class HomeMobileScreen extends StatefulWidget {
   const HomeMobileScreen({super.key});
@@ -36,27 +41,10 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
               SizedBox(
                 width: 20,
               ),
-              GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 6,
-                  crossAxisSpacing: 6,
-                  crossAxisCount: context.width < 460 ? 1 : 2,
-                  childAspectRatio: 1,
-                  mainAxisExtent: context.height * 0.6,
-                ),
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 5,
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                itemBuilder: (context, index) {
-                  return BlogItemView(
-                    onTap: () {},
-                    onTapProfile: () {
-                      context.toNextScreen(ProfileScreen());
-                    },
-                  );
-                },
-              )
+              BlogListSection(),
+              SizedBox(
+                height: 40,
+              ),
             ],
           ),
         ),
@@ -74,6 +62,57 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
           ),
         ),
       ],
+    );
+  }
+}
+
+class BlogListSection extends StatelessWidget {
+  const BlogListSection({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<BlogBloc, BlogState>(
+      builder: (context, state) {
+        if (state is GetAllBlogSuccessState) {
+          var list = state.blogList;
+          return GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 6,
+              crossAxisSpacing: 6,
+              crossAxisCount: context.width < 460 ? 1 : 2,
+              childAspectRatio: 1,
+              mainAxisExtent: context.height * 0.6,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: list.length,
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            itemBuilder: (context, index) {
+              var item = list[index];
+
+              return BlogItemView(
+                blog: item,
+                onTap: () {
+                  item.link?.launchURL();
+                },
+                onTapProfile: () {
+                  context.toNextScreen(ProfileScreen());
+                },
+              );
+            },
+          );
+        } else if (state is GetAllBlogFailStae) {
+          return Center(
+            child: Text("${state.e}"),
+          );
+        } else {
+          return Center(
+            child: CustomLoadingView(),
+          );
+        }
+      },
     );
   }
 }

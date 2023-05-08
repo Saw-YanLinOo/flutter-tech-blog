@@ -1,17 +1,22 @@
 import 'dart:ui';
 
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:techblog/domain/repository/tech_blog_repository.dart';
 import 'package:techblog/extensions/extensions.dart';
-import 'package:techblog/presentation/bloc/home/home_bloc.dart';
-import 'package:techblog/presentation/bloc/home/home_event.dart';
-import 'package:techblog/presentation/bloc/home/home_state.dart';
+import 'package:techblog/presentation/bloc/home/blog_bloc.dart';
+import 'package:techblog/presentation/bloc/home/blog_event.dart';
+import 'package:techblog/presentation/bloc/home/blog_state.dart';
 import 'package:techblog/presentation/bloc/theme/theme_bloc.dart';
 import 'package:techblog/presentation/bloc/theme/theme_event.dart';
 import 'package:techblog/presentation/bloc/theme/theme_state.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
-import 'package:techblog/presentation/screens/widgets/blog_item_view.dart';
+import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+
+import '../widgets/custom_loading_view.dart';
 
 class HomeWindowScreen extends StatefulWidget {
   const HomeWindowScreen({super.key});
@@ -216,25 +221,46 @@ class BlogListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      shrinkWrap: true,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        crossAxisCount: 2,
-        mainAxisExtent: context.height * 0.6,
-        childAspectRatio: 1 / 1,
-      ),
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: 5,
-      padding: const EdgeInsets.only(right: 20),
-      itemBuilder: (context, index) {
-        return BlogItemView(
-          onTap: () {},
-          onTapProfile: () {
-            context.toNextScreen(ProfileScreen());
-          },
-        );
+    return BlocBuilder<BlogBloc, BlogState>(
+      builder: (context, state) {
+        if (state is GetAllBlogSuccessState) {
+          var list = state.blogList;
+
+          return GridView.builder(
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              crossAxisCount: 2,
+              mainAxisExtent: context.height * 0.6,
+              childAspectRatio: 1 / 1,
+            ),
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: list.length,
+            padding: const EdgeInsets.only(right: 20),
+            itemBuilder: (context, index) {
+              var item = list[index];
+
+              return BlogItemView(
+                blog: item,
+                onTap: () {
+                  item.link?.launchURL();
+                },
+                onTapProfile: () {
+                  context.toNextScreen(ProfileScreen());
+                },
+              );
+            },
+          );
+        } else if (state is GetAllBlogFailStae) {
+          return Center(
+            child: Text("${state.e}"),
+          );
+        } else {
+          return Center(
+            child: CustomLoadingView(),
+          );
+        }
       },
     );
   }
@@ -247,108 +273,145 @@ class FeatureBlogItemView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: context.height * 0.7,
-      width: double.infinity,
-      child: Card(
-        child: Padding(
-          padding: EdgeInsets.only(right: 20),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                height: context.height * 0.7,
-                width: 500,
-                clipBehavior: Clip.hardEdge,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: Image.asset(
-                  "assets/images/chat_gpt.jpg",
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(
-                width: 12,
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: 12,
-                    ),
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: GestureDetector(
-                        onTap: () {
-                          context.toNextScreen(ProfileScreen());
-                        },
-                        child: Row(
+    return BlocBuilder<BlogBloc, BlogState>(
+      builder: (context, state) {
+        if (state is GetAllBlogSuccessState) {
+          var blog =
+              state.blogList.firstWhere((element) => element.feature == 1);
+
+          return GestureDetector(
+            onTap: () {
+              blog.link?.launchURL();
+            },
+            child: Container(
+              height: context.height * 0.7,
+              width: double.infinity,
+              child: Card(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        height: context.height * 0.7,
+                        width: 500,
+                        clipBehavior: Clip.hardEdge,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: CachedNetworkImage(
+                          imageUrl: "${blog.url}",
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 12,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Container(
-                              width: 32,
-                              height: 32,
-                              clipBehavior: Clip.hardEdge,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                              ),
-                              child: Image.asset(
-                                "assets/images/profile.jpg",
-                                fit: BoxFit.cover,
+                            SizedBox(
+                              height: 12,
+                            ),
+                            MouseRegion(
+                              cursor: SystemMouseCursors.click,
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.toNextScreen(ProfileScreen());
+                                },
+                                child: Row(
+                                  children: [
+                                    Container(
+                                      width: 32,
+                                      height: 32,
+                                      clipBehavior: Clip.hardEdge,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: CachedNetworkImage(
+                                        imageUrl: "${blog.userAvatorUrl}",
+                                        errorWidget: (context, url, error) {
+                                          return Image.asset(
+                                            "assets/images/chat_gpt.jpg",
+                                            fit: BoxFit.cover,
+                                          );
+                                        },
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      "${blog.userName ?? "Sayar"}",
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(
-                              width: 8,
+                              height: 8,
                             ),
                             Text(
-                              "Saw Yan Lin Oo",
+                              "${blog.title}",
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 42,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            AutoSizeText(
+                              "${blog.description}",
+                              maxLines: 6,
+                              style: TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "${DateFormat('MMM d y').format(blog.date ?? DateTime.now())} . ${blog.view} view",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Theme.of(context).disabledColor,
                               ),
                             ),
                           ],
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "The Movie DB Application",
-                      maxLines: 2,
-                      style: TextStyle(
-                        fontSize: 42,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "MovieLab is an open source and a cross-platform mobile app where you can find movies, series, seasons, episodes, movie recommendation and actors from the largest movie database IMDB. With this spp, you can also find season and movie ratings to make a solid decision on what to watch next.",
-                      maxLines: 6,
-                      style: TextStyle(
-                        fontSize: 13,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      "Oct 11 2023 . 23 view",
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).disabledColor,
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
-      ),
+            ),
+          );
+        } else if (state is GetAllBlogFailStae) {
+          return SizedBox(
+            height: context.height * 0.7,
+            width: double.infinity,
+            child: Center(
+              child: Text("${state.e}"),
+            ),
+          );
+        } else {
+          return Container(
+            height: context.height * 0.7,
+            width: double.infinity,
+            child: Center(
+              child: CustomLoadingView(),
+            ),
+          );
+        }
+      },
     );
   }
 }

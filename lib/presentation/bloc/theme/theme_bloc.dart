@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/domain/repository/tech_blog_repository.dart';
-import 'package:techblog/domain/repository_impl/tech_blog_repository_impl.dart';
+import 'package:techblog/domain/repository/tech_blog_repository_impl.dart';
 import 'package:techblog/presentation/bloc/theme/theme_event.dart';
 import 'package:techblog/presentation/bloc/theme/theme_state.dart';
 

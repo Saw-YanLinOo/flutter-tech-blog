@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:techblog/extensions/extensions.dart';
-import 'package:techblog/presentation/screens/widgets/blog_item_view.dart';
+import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
 
 class ProfileWindowScreen extends StatelessWidget {
   const ProfileWindowScreen({
