@@ -577,10 +577,8 @@ class SingInButtonView extends StatelessWidget {
         onTap: () {
           onTapSingIn();
         },
-        child: Container(
-          clipBehavior: Clip.hardEdge,
-          decoration: BoxDecoration(
-            color: Theme.of(context).focusColor,
+        child: Card(
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(40),
           ),
           child: Padding(

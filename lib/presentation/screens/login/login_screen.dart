@@ -67,7 +67,7 @@ class LoginScree extends StatelessWidget {
               ),
               PasswordTextField(),
               SizedBox(
-                height: 20,
+                height: 12,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -84,15 +84,30 @@ class LoginScree extends StatelessWidget {
               SizedBox(
                 height: 32,
               ),
-              Container(
-                height: 40,
-                decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).textTheme.bodyMedium.color,
-                
+              MouseRegion(
+                cursor: SystemMouseCursors.click,
+                child: GestureDetector(
+                  onTap: () {},
+                  child: Container(
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).textTheme.bodyMedium?.color,
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    width: double.infinity,
+                    child: Center(
+                      child: Text(
+                        "Login In",
+                        style: TextStyle(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          fontSize: 16,
+                          letterSpacing: 1,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                width: double.infinity,
-                child: Text("Login In"),
               )
             ],
           ),
