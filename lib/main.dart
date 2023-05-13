@@ -1,4 +1,3 @@
-import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/core/local/my_share_perference.dart';
@@ -18,12 +17,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    DevicePreview(
-      enabled: false,
-      builder: (context) {
-        return const MyApp();
-      },
-    ),
+    const MyApp(),
   );
 }
 
@@ -42,9 +36,6 @@ class MyApp extends StatelessWidget {
         builder: (context, bloc) {
           return MaterialApp(
             title: 'YanYan Teach Blog',
-            useInheritedMediaQuery: true,
-            locale: DevicePreview.locale(context),
-            builder: DevicePreview.appBuilder,
             debugShowCheckedModeBanner: false,
             themeMode: bloc.themeMode ?? ThemeMode.system,
             theme: ThemeData.light(

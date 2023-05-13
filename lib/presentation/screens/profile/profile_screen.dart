@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:techblog/extensions/extensions.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:techblog/presentation/screens/profile/profile_mobile_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_window_screen.dart';
 

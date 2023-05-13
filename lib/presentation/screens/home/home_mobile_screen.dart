@@ -1,11 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/extensions/extensions.dart';
-import 'package:techblog/presentation/screens/home/home_window_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
 import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
 
