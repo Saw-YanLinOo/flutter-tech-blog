@@ -1,7 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:techblog/domain/models/blog.dart';
 import 'package:techblog/extensions/extensions.dart';
 import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+import 'package:techblog/presentation/screens/widgets/custom_loading_view.dart';
+
+import '../../bloc/profile/profile_bloc.dart';
+import '../../bloc/profile/profile_state.dart';
 
 class ProfileMobileScreen extends StatelessWidget {
   const ProfileMobileScreen({
@@ -201,29 +207,60 @@ class OverAllView extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              GridView.builder(
-                shrinkWrap: true,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  mainAxisSpacing: 6,
-                  crossAxisSpacing: 6,
-                  crossAxisCount: context.width < 460 ? 1 : 2,
-                  childAspectRatio: 1,
-                  mainAxisExtent: context.height * 0.6,
-                ),
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: 5,
-                padding: const EdgeInsets.only(right: 10),
-                itemBuilder: (context, index) {
-                  return BlogItemView(
-                    onTap: () {},
-                    onTapProfile: (){},
+              BlocBuilder<ProfileBloc, ProfileState>(builder: (context, state) {
+                if (state is GetUserBlogSuccess) {
+                  var blogList = state.list;
+                  return ProfileMobileBlogView(blogList: blogList);
+                } else if (state is GetUserBlogFail) {
+                  return Center(
+                    child: Text("${state.object}"),
                   );
-                },
-              )
+                } else {
+                  return const Center(
+                    child: CustomLoadingView(),
+                  );
+                }
+              }),
             ],
           ),
         ),
       ),
+    );
+  }
+}
+
+class ProfileMobileBlogView extends StatelessWidget {
+  const ProfileMobileBlogView({
+    super.key,
+    required this.blogList,
+  });
+
+  final List<Blog> blogList;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.builder(
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        mainAxisSpacing: 6,
+        crossAxisSpacing: 6,
+        crossAxisCount: context.width < 460 ? 1 : 2,
+        childAspectRatio: 1,
+        mainAxisExtent: context.height * 0.6,
+      ),
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: blogList.length,
+      padding: const EdgeInsets.only(right: 10),
+      itemBuilder: (context, index) {
+        var blog = blogList[index];
+        return BlogItemView(
+          blog: blog,
+          onTap: () {
+            blog.link?.launchURL();
+          },
+          onTapProfile: () {},
+        );
+      },
     );
   }
 }

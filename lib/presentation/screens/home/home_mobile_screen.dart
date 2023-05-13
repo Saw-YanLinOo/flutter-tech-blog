@@ -3,11 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/extensions/extensions.dart';
+import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
+import 'package:techblog/presentation/bloc/profile/profile_event.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
 import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
 
-import '../../bloc/home/blog_bloc.dart';
-import '../../bloc/home/blog_state.dart';
+import '../../bloc/blog/blog_bloc.dart';
+import '../../bloc/blog/blog_state.dart';
 import '../widgets/custom_loading_view.dart';
 
 class HomeMobileScreen extends StatefulWidget {
@@ -95,6 +97,9 @@ class BlogListSection extends StatelessWidget {
                   item.link?.launchURL();
                 },
                 onTapProfile: () {
+                  context
+                      .read<ProfileBloc>()
+                      .add(GetUserBlogEvent(item.userId ?? ""));
                   context.toNextScreen(ProfileScreen());
                 },
               );

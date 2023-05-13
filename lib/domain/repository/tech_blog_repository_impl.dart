@@ -32,4 +32,11 @@ class TechBlogRepositoryImpl extends TechBlogRepository {
   Future<List<Blog>> getAllBlog() {
     return _firebase.getAllBlog();
   }
+
+  @override
+  Future<List<Blog>> getBlogByUserID(String id) {
+    return _firebase.getAllBlog().then((blogList) {
+      return blogList.where((e) => e.userId == id).toList();
+    });
+  }
 }

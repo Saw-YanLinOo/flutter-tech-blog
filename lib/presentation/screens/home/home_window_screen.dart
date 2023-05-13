@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:techblog/extensions/extensions.dart';
-import 'package:techblog/presentation/bloc/home/blog_bloc.dart';
-import 'package:techblog/presentation/bloc/home/blog_state.dart';
+import 'package:techblog/presentation/bloc/blog/blog_bloc.dart';
+import 'package:techblog/presentation/bloc/blog/blog_state.dart';
+import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
+import 'package:techblog/presentation/bloc/profile/profile_event.dart';
 import 'package:techblog/presentation/bloc/theme/theme_bloc.dart';
 import 'package:techblog/presentation/bloc/theme/theme_event.dart';
 import 'package:techblog/presentation/bloc/theme/theme_state.dart';
+import 'package:techblog/presentation/screens/login/login_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
 import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
 
@@ -176,7 +179,7 @@ class SearchView extends StatelessWidget {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              margin: EdgeInsets.only(top: context.width * 0.2),
+              margin: EdgeInsets.only(top: context.height * 0.15),
               child: Container(
                 width: context.width * 0.4,
                 clipBehavior: Clip.hardEdge,
@@ -245,6 +248,9 @@ class BlogListView extends StatelessWidget {
                   item.link?.launchURL();
                 },
                 onTapProfile: () {
+                  context
+                      .read<ProfileBloc>()
+                      .add(GetUserBlogEvent(item.userId ?? ""));
                   context.toNextScreen(ProfileScreen());
                 },
               );
@@ -316,6 +322,9 @@ class FeatureBlogItemView extends StatelessWidget {
                               cursor: SystemMouseCursors.click,
                               child: GestureDetector(
                                 onTap: () {
+                                  context
+                                      .read<ProfileBloc>()
+                                      .add(GetUserBlogEvent(blog.userId ?? ""));
                                   context.toNextScreen(ProfileScreen());
                                 },
                                 child: Row(
@@ -523,32 +532,65 @@ class _HomeWindowAppBarState extends State<HomeWindowAppBar> {
             SizedBox(
               width: 20,
             ),
-            Text("Sign in"),
-            SizedBox(
-              width: 20,
-            ),
-            Container(
-              clipBehavior: Clip.hardEdge,
-              decoration: BoxDecoration(
-                color: Theme.of(context).focusColor,
-                borderRadius: BorderRadius.circular(40),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 8.0,
-                ),
-                child: Text(
-                  "Subscribe",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
+            // Text("Sign in"),
+            // SizedBox(
+            //   width: 20,
+            // ),
+            SingInButtonView(
+              onTapSingIn: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      content: LoginScree(),
+                    );
+                  },
+                );
+              },
             )
           ],
         ),
       ],
+    );
+  }
+}
+
+class SingInButtonView extends StatelessWidget {
+  const SingInButtonView({
+    super.key,
+    required this.onTapSingIn,
+  });
+
+  final Function onTapSingIn;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      cursor: MaterialStateMouseCursor.clickable,
+      child: GestureDetector(
+        onTap: () {
+          onTapSingIn();
+        },
+        child: Container(
+          clipBehavior: Clip.hardEdge,
+          decoration: BoxDecoration(
+            color: Theme.of(context).focusColor,
+            borderRadius: BorderRadius.circular(40),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8.0,
+            ),
+            child: Text(
+              "Sign In",
+              style: TextStyle(
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

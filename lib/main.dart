@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:techblog/core/local/my_share_perference.dart';
-import 'package:techblog/presentation/bloc/home/blog_bloc.dart';
-import 'package:techblog/presentation/bloc/home/blog_event.dart';
+import 'package:techblog/presentation/bloc/blog/blog_bloc.dart';
+import 'package:techblog/presentation/bloc/blog/blog_event.dart';
+import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
 import 'package:techblog/presentation/bloc/theme/theme_bloc.dart';
 import 'package:techblog/presentation/bloc/theme/theme_event.dart';
 import 'package:techblog/presentation/bloc/theme/theme_state.dart';
@@ -41,6 +42,7 @@ class InitBloc extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => BlogBloc()),
+        BlocProvider(create: (context) => ProfileBloc()),
       ],
       child: const MyApp(),
     );
@@ -61,11 +63,20 @@ class MyApp extends StatelessWidget {
           title: 'YanYan Teach Blog',
           debugShowCheckedModeBanner: false,
           themeMode: bloc.themeMode ?? ThemeMode.system,
-          theme: ThemeData.light(
+          scrollBehavior: kIsWeb
+              ? const ScrollBehavior().copyWith(scrollbars: false)
+              : null,
+          theme: ThemeData(
+              useMaterial3: true,
+              scrollbarTheme: ScrollbarThemeData(
+                showTrackOnHover: false,
+              )),
+          darkTheme: ThemeData(
+            brightness: Brightness.dark,
             useMaterial3: true,
-          ),
-          darkTheme: ThemeData.dark(
-            useMaterial3: true,
+            scrollbarTheme: ScrollbarThemeData(
+              showTrackOnHover: false,
+            ),
           ),
           home: const HomeScreen(),
         );
