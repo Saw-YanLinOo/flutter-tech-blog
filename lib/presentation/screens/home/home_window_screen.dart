@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -541,7 +542,12 @@ class _HomeWindowAppBarState extends State<HomeWindowAppBar> {
                 showDialog(
                   context: context,
                   builder: (context) {
-                    return AlertDialog(
+                    return const AlertDialog(
+                      shape: kIsWeb
+                          ? RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            )
+                          : null,
                       content: LoginScree(),
                     );
                   },
