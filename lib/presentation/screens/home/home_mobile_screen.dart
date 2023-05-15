@@ -1,12 +1,16 @@
 import 'dart:ui';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/extensions/extensions.dart';
 import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
 import 'package:techblog/presentation/bloc/profile/profile_event.dart';
+import 'package:techblog/presentation/screens/login/login_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
 import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+import 'package:techblog/presentation/screens/widgets/signin_button_view.dart';
+import 'package:techblog/presentation/screens/widgets/theme_button_view.dart';
 
 import '../../bloc/blog/blog_bloc.dart';
 import '../../bloc/blog/blog_state.dart';
@@ -193,8 +197,6 @@ class HomeBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
-      width: context.width,
       clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -203,29 +205,35 @@ class HomeBottomNavigationBar extends StatelessWidget {
           topRight: Radius.circular(10),
         ),
       ),
-      child: SizedBox(
-        width: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            Text(
-              "Home",
-              style: TextStyle(),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 260,
+            height: 50,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Home",
+                  style: TextStyle(),
+                ),
+                Text(
+                  "Resourse",
+                  style: TextStyle(),
+                ),
+                Text(
+                  "Favouries",
+                  style: TextStyle(),
+                ),
+                Text(
+                  "Setting",
+                  style: TextStyle(),
+                ),
+              ],
             ),
-            Text(
-              "Resourse",
-              style: TextStyle(),
-            ),
-            Text(
-              "Favouries",
-              style: TextStyle(),
-            ),
-            Text(
-              "Setting",
-              style: TextStyle(),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -295,12 +303,26 @@ class HomeMobileAppBar extends StatelessWidget {
             SizedBox(
               width: 20,
             ),
-            Text("Sign in"),
+            ThemeButtonView(),
             SizedBox(
               width: 20,
             ),
-            Icon(
-              Icons.notifications,
+            SingInButtonView(
+              onTapSingIn: () {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const AlertDialog(
+                      shape: kIsWeb
+                          ? RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero,
+                            )
+                          : null,
+                      content: LoginScree(),
+                    );
+                  },
+                );
+              },
             ),
           ],
         ),

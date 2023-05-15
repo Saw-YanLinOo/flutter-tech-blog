@@ -5,10 +5,15 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:techblog/core/remote/remote_constant.dart';
+import 'package:techblog/domain/models/user_model.dart';
 import 'package:techblog/extensions/extensions.dart';
 import 'package:techblog/presentation/bloc/blog/blog_bloc.dart';
 import 'package:techblog/presentation/bloc/blog/blog_state.dart';
+import 'package:techblog/presentation/bloc/home/user_bloc.dart';
+import 'package:techblog/presentation/bloc/login/login_bloc.dart';
 import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
 import 'package:techblog/presentation/bloc/profile/profile_event.dart';
 import 'package:techblog/presentation/bloc/theme/theme_bloc.dart';
@@ -17,6 +22,8 @@ import 'package:techblog/presentation/bloc/theme/theme_state.dart';
 import 'package:techblog/presentation/screens/login/login_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
 import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+import 'package:techblog/presentation/screens/widgets/signin_button_view.dart';
+import 'package:techblog/presentation/screens/widgets/theme_button_view.dart';
 
 import '../widgets/custom_loading_view.dart';
 
@@ -497,39 +504,7 @@ class _HomeWindowAppBarState extends State<HomeWindowAppBar> {
             SizedBox(
               width: 20,
             ),
-            BlocBuilder<ThemeBloc, ThemeState>(
-              builder: (context, state) {
-                if (state is GetThemeState) {
-                  var themeMode = state.themeMode;
-
-                  if (themeMode == ThemeMode.dark) {
-                    return InkWell(
-                      onTap: () {
-                        context
-                            .read<ThemeBloc>()
-                            .add(ChangeThemeEvent(themeMode: ThemeMode.light));
-                      },
-                      child: Icon(
-                        Icons.dark_mode,
-                      ),
-                    );
-                  } else {
-                    return InkWell(
-                      onTap: () {
-                        context
-                            .read<ThemeBloc>()
-                            .add(ChangeThemeEvent(themeMode: ThemeMode.dark));
-                      },
-                      child: Icon(
-                        Icons.light_mode,
-                      ),
-                    );
-                  }
-                } else {
-                  return SizedBox();
-                }
-              },
-            ),
+            ThemeButtonView(),
             SizedBox(
               width: 20,
             ),
@@ -553,7 +528,7 @@ class _HomeWindowAppBarState extends State<HomeWindowAppBar> {
                   },
                 );
               },
-            )
+            ),
           ],
         ),
       ],
@@ -561,43 +536,8 @@ class _HomeWindowAppBarState extends State<HomeWindowAppBar> {
   }
 }
 
-class SingInButtonView extends StatelessWidget {
-  const SingInButtonView({
-    super.key,
-    required this.onTapSingIn,
-  });
 
-  final Function onTapSingIn;
 
-  @override
-  Widget build(BuildContext context) {
-    return MouseRegion(
-      cursor: MaterialStateMouseCursor.clickable,
-      child: GestureDetector(
-        onTap: () {
-          onTapSingIn();
-        },
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(40),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 8.0,
-            ),
-            child: Text(
-              "Sign In",
-              style: TextStyle(
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
 
 class WindowNavItemView extends StatefulWidget {
   const WindowNavItemView({

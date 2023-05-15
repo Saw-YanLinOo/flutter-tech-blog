@@ -5,6 +5,8 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:techblog/core/local/my_share_perference.dart';
 import 'package:techblog/presentation/bloc/blog/blog_bloc.dart';
 import 'package:techblog/presentation/bloc/blog/blog_event.dart';
+import 'package:techblog/presentation/bloc/home/user_bloc.dart';
+import 'package:techblog/presentation/bloc/login/login_bloc.dart';
 import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
 import 'package:techblog/presentation/bloc/theme/theme_bloc.dart';
 import 'package:techblog/presentation/bloc/theme/theme_event.dart';
@@ -43,6 +45,8 @@ class InitBloc extends StatelessWidget {
         BlocProvider(create: (context) => ThemeBloc()),
         BlocProvider(create: (context) => BlogBloc()),
         BlocProvider(create: (context) => ProfileBloc()),
+        BlocProvider(create: (context) => UserBloc()),
+        BlocProvider(create: (context) => LoginBloc()),
       ],
       child: const MyApp(),
     );
