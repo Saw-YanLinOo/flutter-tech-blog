@@ -46,7 +46,7 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
               ),
               BlogListSection(),
               SizedBox(
-                height: 40,
+                height: 50,
               ),
             ],
           ),
@@ -87,7 +87,9 @@ class BlogListSection extends StatelessWidget {
               crossAxisSpacing: 6,
               crossAxisCount: context.width < 460 ? 1 : 2,
               childAspectRatio: 1,
-              mainAxisExtent: context.height * 0.6,
+              mainAxisExtent: context.width < 460
+                  ? context.height * 0.5
+                  : context.height * 0.6,
             ),
             physics: const NeverScrollableScrollPhysics(),
             itemCount: list.length,

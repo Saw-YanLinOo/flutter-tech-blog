@@ -49,7 +49,7 @@ class BottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 40,
+      height: 50,
       width: context.width,
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
@@ -59,36 +59,44 @@ class BottomNavigationBar extends StatelessWidget {
         ),
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(
-            "About",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            "Resume",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            "Portfolio",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            "Blog",
-            style: TextStyle(
-              fontSize: 16,
-            ),
-          ),
-          Text(
-            "Contact",
-            style: TextStyle(
-              fontSize: 16,
+          SizedBox(
+            width: 300,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "About",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  "Resume",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  "Portfolio",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  "Blog",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+                Text(
+                  "Contact",
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
           ),
         ],
@@ -221,6 +229,9 @@ class OverAllView extends StatelessWidget {
                   );
                 }
               }),
+              SizedBox(
+                height: 50,
+              ),
             ],
           ),
         ),
@@ -246,7 +257,8 @@ class ProfileMobileBlogView extends StatelessWidget {
         crossAxisSpacing: 6,
         crossAxisCount: context.width < 460 ? 1 : 2,
         childAspectRatio: 1,
-        mainAxisExtent: context.height * 0.6,
+        mainAxisExtent:
+            context.width < 460 ? context.height * 0.5 : context.height * 0.6,
       ),
       physics: const NeverScrollableScrollPhysics(),
       itemCount: blogList.length,

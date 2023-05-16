@@ -22,10 +22,10 @@ class _LoginScreeState extends State<LoginScree> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: context.width * 0.4,
+      width: context.isTablet ? context.width * 0.4 : context.width,
       child: Center(
         child: SizedBox(
-          width: context.width * 0.3,
+          width: context.isTablet ? context.width * 0.3 : context.width,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -169,26 +169,56 @@ class _LoginScreeState extends State<LoginScree> {
               SizedBox(
                 height: 42,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  LoginIconView(
-                    icon: FontAwesomeIcons.google,
-                    title: "Google",
-                    onTap: () {},
-                  ),
-                  LoginIconView(
-                    icon: FontAwesomeIcons.facebook,
-                    title: "Facebook",
-                    onTap: () {},
-                  ),
-                  LoginIconView(
-                    icon: FontAwesomeIcons.apple,
-                    title: "Apple ID",
-                    onTap: () {},
-                  ),
-                ],
-              ),
+              context.isTablet
+                  ? Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        LoginIconView(
+                          icon: FontAwesomeIcons.google,
+                          title: "Google",
+                          onTap: () {},
+                        ),
+                        LoginIconView(
+                          icon: FontAwesomeIcons.facebook,
+                          title: "Facebook",
+                          onTap: () {},
+                        ),
+                        LoginIconView(
+                          icon: FontAwesomeIcons.apple,
+                          title: "Apple ID",
+                          onTap: () {},
+                        ),
+                      ],
+                    )
+                  : SizedBox(
+                      width: double.maxFinite,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          LoginIconView(
+                            icon: FontAwesomeIcons.google,
+                            title: "Google",
+                            onTap: () {},
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          LoginIconView(
+                            icon: FontAwesomeIcons.facebook,
+                            title: "Facebook",
+                            onTap: () {},
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          LoginIconView(
+                            icon: FontAwesomeIcons.apple,
+                            title: "Apple ID",
+                            onTap: () {},
+                          ),
+                        ],
+                      ),
+                    ),
               Expanded(
                 child: Center(
                   child: Row(
@@ -261,6 +291,7 @@ class LoginIconView extends StatelessWidget {
         onTap();
       },
       child: Container(
+        width: context.isTablet ? null : 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(6),
           border: Border.all(
@@ -268,18 +299,20 @@ class LoginIconView extends StatelessWidget {
           ),
         ),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(
-              icon,
-              size: 18,
-            ),
-            SizedBox(
-              width: 8,
-            ),
-            Text(title)
-          ],
+        child: Center(
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: 18,
+              ),
+              SizedBox(
+                width: 8,
+              ),
+              Text(title)
+            ],
+          ),
         ),
       ),
     );
