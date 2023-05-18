@@ -26,190 +26,164 @@ class _LoginScreeState extends State<LoginScree> {
       child: Center(
         child: SizedBox(
           width: context.isTablet ? context.width * 0.3 : context.width,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Welcome Back   ",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              Text(
-                "Enter your information to start register",
-                style: TextStyle(
-                  fontSize: 13,
-                  color: Theme.of(context).disabledColor,
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Email Address",
-                style: TextStyle(),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              SizedBox(
-                height: 40,
-                child: TextField(
-                  controller: _emailController,
-                  decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                "Password",
-                style: TextStyle(),
-              ),
-              SizedBox(
-                height: 8,
-              ),
-              PasswordTextField(
-                controller: _passwordController,
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(""),
-                  Text(
-                    "Forget Password?",
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 32,
-              ),
-              BlocConsumer<LoginBloc, LoginState>(
-                  listener: _mapBlocState,
-                  builder: (context, state) {
-                    return RoundedLoadingButton(
-                      controller: _loginBtn,
-                      onPressed: () {
-                        if (_emailController.text.isNotEmpty &&
-                            _passwordController.text.isNotEmpty) {
-                          context.read<LoginBloc>().loginWithEmailPassword(
-                              _emailController.text, _passwordController.text);
-                        } else {
-                          showSnackBar('Enter Correct Email and Password');
-                          _loginBtn.reset();
-                        }
-                      },
-                      child: Text(
-                        "Login In",
-                        style: TextStyle(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          fontSize: 16,
-                          letterSpacing: 1,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      borderRadius: 4,
-                      color: Theme.of(context).textTheme.bodyMedium?.color,
-                      width: double.maxFinite,
-                    );
-                  }),
-              // MouseRegion(
-              //   cursor: SystemMouseCursors.click,
-              //   child: GestureDetector(
-              //     onTap: () {},
-              //     child: Container(
-              //       height: 40,
-              //       decoration: BoxDecoration(
-              //         color: Theme.of(context).textTheme.bodyMedium?.color,
-              //         borderRadius: BorderRadius.circular(4),
-              //       ),
-              //       width: double.infinity,
-              //       child: Center(
-              //         child: Text(
-              //           "Login In",
-              //           style: TextStyle(
-              //             color: Theme.of(context).scaffoldBackgroundColor,
-              //             fontSize: 16,
-              //             letterSpacing: 1,
-              //             fontWeight: FontWeight.bold,
-              //           ),
-              //         ),
-              //       ),
-              //     ),
-              //   ),
-              // ),
-              SizedBox(
-                height: 42,
-              ),
-              Center(
-                child: Text(
-                  "Or Sign in with",
+                Text(
+                  "Welcome Back   ",
                   style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  "Enter your information to start register",
+                  style: TextStyle(
+                    fontSize: 13,
                     color: Theme.of(context).disabledColor,
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 42,
-              ),
-              context.isTablet
-                  ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        LoginIconView(
-                          icon: FontAwesomeIcons.google,
-                          title: "Google",
-                          onTap: () {},
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Email Address",
+                  style: TextStyle(),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                SizedBox(
+                  height: 40,
+                  child: TextField(
+                    controller: _emailController,
+                    decoration: InputDecoration(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                Text(
+                  "Password",
+                  style: TextStyle(),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                PasswordTextField(
+                  controller: _passwordController,
+                ),
+                SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(""),
+                    Text(
+                      "Forget Password?",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 32,
+                ),
+                BlocConsumer<LoginBloc, LoginState>(
+                    listener: _mapBlocState,
+                    builder: (context, state) {
+                      return RoundedLoadingButton(
+                        controller: _loginBtn,
+                        onPressed: () {
+                          if (_emailController.text.isNotEmpty &&
+                              _passwordController.text.isNotEmpty) {
+                            context.read<LoginBloc>().loginWithEmailPassword(
+                                _emailController.text,
+                                _passwordController.text);
+                          } else {
+                            showSnackBar('Enter Correct Email and Password');
+                            _loginBtn.reset();
+                          }
+                        },
+                        child: Text(
+                          "Login In",
+                          style: TextStyle(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            fontSize: 16,
+                            letterSpacing: 1,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        LoginIconView(
-                          icon: FontAwesomeIcons.facebook,
-                          title: "Facebook",
-                          onTap: () {},
-                        ),
-                        LoginIconView(
-                          icon: FontAwesomeIcons.apple,
-                          title: "Apple ID",
-                          onTap: () {},
-                        ),
-                      ],
-                    )
-                  : SizedBox(
-                      width: double.maxFinite,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        borderRadius: 4,
+                        color: Theme.of(context).textTheme.bodyMedium?.color,
+                        width: double.maxFinite,
+                      );
+                    }),
+                // MouseRegion(
+                //   cursor: SystemMouseCursors.click,
+                //   child: GestureDetector(
+                //     onTap: () {},
+                //     child: Container(
+                //       height: 40,
+                //       decoration: BoxDecoration(
+                //         color: Theme.of(context).textTheme.bodyMedium?.color,
+                //         borderRadius: BorderRadius.circular(4),
+                //       ),
+                //       width: double.infinity,
+                //       child: Center(
+                //         child: Text(
+                //           "Login In",
+                //           style: TextStyle(
+                //             color: Theme.of(context).scaffoldBackgroundColor,
+                //             fontSize: 16,
+                //             letterSpacing: 1,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                SizedBox(
+                  height: 42,
+                ),
+                Center(
+                  child: Text(
+                    "Or Sign in with",
+                    style: TextStyle(
+                      color: Theme.of(context).disabledColor,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 42,
+                ),
+                context.isTablet
+                    ? Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           LoginIconView(
                             icon: FontAwesomeIcons.google,
                             title: "Google",
                             onTap: () {},
                           ),
-                          SizedBox(
-                            height: 12,
-                          ),
                           LoginIconView(
                             icon: FontAwesomeIcons.facebook,
                             title: "Facebook",
                             onTap: () {},
-                          ),
-                          SizedBox(
-                            height: 12,
                           ),
                           LoginIconView(
                             icon: FontAwesomeIcons.apple,
@@ -217,10 +191,40 @@ class _LoginScreeState extends State<LoginScree> {
                             onTap: () {},
                           ),
                         ],
+                      )
+                    : SizedBox(
+                        width: double.maxFinite,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            LoginIconView(
+                              icon: FontAwesomeIcons.google,
+                              title: "Google",
+                              onTap: () {},
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            LoginIconView(
+                              icon: FontAwesomeIcons.facebook,
+                              title: "Facebook",
+                              onTap: () {},
+                            ),
+                            SizedBox(
+                              height: 12,
+                            ),
+                            LoginIconView(
+                              icon: FontAwesomeIcons.apple,
+                              title: "Apple ID",
+                              onTap: () {},
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-              Expanded(
-                child: Center(
+                SizedBox(
+                  height: 32,
+                ),
+                Center(
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -239,8 +243,8 @@ class _LoginScreeState extends State<LoginScree> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

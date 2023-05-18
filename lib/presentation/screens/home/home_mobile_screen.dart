@@ -27,10 +27,10 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
   bool isSearch = false;
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SingleChildScrollView(
-          child: Column(
+    return SafeArea(
+      child: Stack(
+        children: [
+          Column(
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -44,27 +44,29 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
               SizedBox(
                 width: 20,
               ),
-              BlogListSection(),
+              Expanded(
+                child: BlogListSection(),
+              ),
               SizedBox(
                 height: 50,
               ),
             ],
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: HomeBottomNavigationBar(),
-        ),
-        Positioned.fill(
-          child: SearchMobileView(
-            isSearch: isSearch,
-            onTapCancel: () {
-              isSearch = false;
-              setState(() {});
-            },
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: HomeBottomNavigationBar(),
           ),
-        ),
-      ],
+          Positioned.fill(
+            child: SearchMobileView(
+              isSearch: isSearch,
+              onTapCancel: () {
+                isSearch = false;
+                setState(() {});
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -91,7 +93,7 @@ class BlogListSection extends StatelessWidget {
                   ? context.height * 0.5
                   : context.height * 0.6,
             ),
-            physics: const NeverScrollableScrollPhysics(),
+            // physics: const NeverScrollableScrollPhysics(),
             itemCount: list.length,
             padding: const EdgeInsets.symmetric(horizontal: 20),
             itemBuilder: (context, index) {

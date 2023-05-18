@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/domain/models/blog.dart';
@@ -16,27 +17,35 @@ class ProfileMobileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Positioned.fill(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PersonalInformationView(),
-                SizedBox(
-                  width: 10,
-                ),
-                OverAllView(),
-              ],
+    return Scaffold(
+      appBar: !kIsWeb
+          ? AppBar(
+              title: Text("Profile Information"),
+              centerTitle: true,
+            )
+          : null,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  PersonalInformationView(),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  OverAllView(),
+                ],
+              ),
             ),
           ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: BottomNavigationBar(),
-        )
-      ],
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: BottomNavigationBar(),
+          )
+        ],
+      ),
     );
   }
 }
@@ -114,7 +123,7 @@ class PersonalInformationView extends StatelessWidget {
       elevation: 1,
       // color: Theme.of(context).cardColor.withAlpha(0),
       child: Container(
-        height: context.height * 0.15,
+        height: context.height * 0.17,
         padding: const EdgeInsets.symmetric(
           horizontal: 20,
           vertical: 20,
