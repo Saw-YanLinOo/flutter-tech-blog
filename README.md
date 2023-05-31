@@ -4,7 +4,7 @@ TechBlog project for Web & Mobile. Shared useful article for daliy. Make with fl
 
 ## url
 
-web - https://flutter-tech-blog.vercel.app
+web - https://yanyan-tech-blog.vercel.app
 
 ## Getting Started
 
