@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:techblog/domain/models/blog.dart';
 import 'package:techblog/extensions/extensions.dart';
-import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+import 'package:techblog/presentation/item_views/blog_item_view.dart';
 import 'package:techblog/presentation/screens/widgets/custom_loading_view.dart';
 
 import '../../bloc/profile/profile_bloc.dart';

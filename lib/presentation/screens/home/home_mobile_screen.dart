@@ -3,12 +3,14 @@ import 'dart:ui';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:techblog/extensions/extensions.dart';
 import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
 import 'package:techblog/presentation/bloc/profile/profile_event.dart';
+import 'package:techblog/presentation/screens/article/article_deail.dart';
 import 'package:techblog/presentation/screens/login/login_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
-import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+import 'package:techblog/presentation/item_views/blog_item_view.dart';
 import 'package:techblog/presentation/screens/widgets/signin_button_view.dart';
 import 'package:techblog/presentation/screens/widgets/theme_button_view.dart';
 
@@ -78,41 +80,55 @@ class BlogListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime currentDate = DateTime.now();
+    DateTime threeMonthsAgo =
+        currentDate.subtract(const Duration(days: 3 * 30));
+
     return BlocBuilder<BlogBloc, BlogState>(
       builder: (context, state) {
         if (state is GetAllBlogSuccessState) {
-          var list = state.blogList;
-          return GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisSpacing: 6,
-              crossAxisSpacing: 6,
-              crossAxisCount: context.width < 460 ? 1 : 2,
-              childAspectRatio: 1,
-              mainAxisExtent: context.width < 460
-                  ? context.height * 0.5
-                  : context.height * 0.6,
-            ),
-            // physics: const NeverScrollableScrollPhysics(),
-            itemCount: list.length,
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            itemBuilder: (context, index) {
-              var item = list[index];
+          var list = state.blogList.where((blog) {
+            return !(blog.date?.isBefore(threeMonthsAgo) ?? true);
+          }).toList();
 
-              return BlogItemView(
-                blog: item,
-                onTap: () {
-                  item.link?.launchURL();
-                },
-                onTapProfile: () {
-                  context
-                      .read<ProfileBloc>()
-                      .add(GetUserBlogEvent(item.userId ?? ""));
-                  context.toNextScreen(ProfileScreen());
-                },
-              );
-            },
-          );
+          return list.isEmpty
+              ? Center(
+                  child: Text("No Articles"),
+                )
+              : GridView.builder(
+                  shrinkWrap: true,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    mainAxisSpacing: 6,
+                    crossAxisSpacing: 6,
+                    crossAxisCount: context.width < 460 ? 1 : 2,
+                    childAspectRatio: 1,
+                    mainAxisExtent: context.width < 460
+                        ? context.height * 0.5
+                        : context.height * 0.6,
+                  ),
+                  // physics: const NeverScrollableScrollPhysics(),
+                  itemCount: list.length,
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  itemBuilder: (context, index) {
+                    var item = list[index];
+
+                    return BlogItemView(
+                      blog: item,
+                      onTap: () {
+                        // item.link?.launchURL();
+                        context.toNextScreen(
+                          ArticleDetail(blogItem: item),
+                        );
+                      },
+                      onTapProfile: () {
+                        context
+                            .read<ProfileBloc>()
+                            .add(GetUserBlogEvent(item.userId ?? ""));
+                        context.toNextScreen(ProfileScreen());
+                      },
+                    );
+                  },
+                );
         } else if (state is GetAllBlogFailStae) {
           return Center(
             child: Text("${state.e}"),

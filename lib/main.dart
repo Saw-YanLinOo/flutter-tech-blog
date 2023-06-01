@@ -71,10 +71,11 @@ class MyApp extends StatelessWidget {
               ? const ScrollBehavior().copyWith(scrollbars: false)
               : null,
           theme: ThemeData(
-              useMaterial3: true,
-              scrollbarTheme: ScrollbarThemeData(
-                showTrackOnHover: false,
-              )),
+            useMaterial3: true,
+            scrollbarTheme: kIsWeb
+                ? const ScrollbarThemeData(showTrackOnHover: false)
+                : null,
+          ),
           darkTheme: ThemeData(
             brightness: Brightness.dark,
             useMaterial3: true,

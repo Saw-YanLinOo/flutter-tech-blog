@@ -6,7 +6,7 @@ import 'package:techblog/domain/models/blog.dart';
 import 'package:techblog/extensions/extensions.dart';
 import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
 import 'package:techblog/presentation/bloc/profile/profile_state.dart';
-import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+import 'package:techblog/presentation/item_views/blog_item_view.dart';
 import 'package:techblog/presentation/screens/widgets/custom_loading_view.dart';
 
 class ProfileWindowScreen extends StatelessWidget {

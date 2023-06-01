@@ -8,13 +8,14 @@ class Blog {
   final String? title;
   final String? description;
   final String? type;
-  final String? url;
+  final String? imageUrl;
   final DateTime? date;
   final String? link;
-  final List<String>? tags;
+  final List<dynamic>? tag;
   final num? view;
   final String? userId;
   final String? userName;
+  final String? userEmail;
   final int? feature;
   final String? userAvatorUrl;
   Blog({
@@ -23,13 +24,14 @@ class Blog {
     this.title,
     this.description,
     this.type,
-    this.url,
+    this.imageUrl,
     this.date,
     this.link,
-    this.tags,
+    this.tag,
     this.view,
     this.userId,
     this.userName,
+    this.userEmail,
     this.userAvatorUrl,
     this.feature,
   });
@@ -41,13 +43,14 @@ class Blog {
       'title': title,
       'description': description,
       'type': type,
-      'url': url,
+      'url': imageUrl,
       'date': date?.millisecondsSinceEpoch,
       'link': link,
-      'tags': tags,
+      'tag': tag,
       'view': view,
       'user_id': userId,
       'user_name': userName,
+      'user_email': userEmail,
       'user_avator_url': userAvatorUrl,
       'feature': feature,
     };
@@ -61,15 +64,16 @@ class Blog {
       description:
           map['description'] != null ? map['description'] as String : null,
       type: map['type'] != null ? map['type'] as String : null,
-      url: map['url'] != null ? map['url'] as String : null,
+      imageUrl: map['url'] != null ? map['url'] as String : null,
       date: map['date'] != null ? (map['date'] as Timestamp).toDate() : null,
       link: map['link'] != null ? map['link'] as String : null,
-      tags: map['tags'] != null
-          ? List<String>.from((map['tags'] as List<String>))
+      tag: map['tag'] != null
+          ? List<dynamic>.from((map['tag'] as List<dynamic>))
           : null,
       view: map['view'] != null ? map['view'] as num : null,
       userId: map['user_id'] != null ? map['user_id'] as String : null,
       userName: map['user_name'] != null ? map['user_name'] as String : null,
+      userEmail: map['user_email'] != null ? map['user_email'] as String : null,
       feature: map['feature'] != null ? map['feature'] as int : null,
       userAvatorUrl: map['user_avator_url'] != null
           ? map['user_avator_url'] as String

@@ -13,7 +13,7 @@ import 'package:techblog/presentation/bloc/profile/profile_bloc.dart';
 import 'package:techblog/presentation/bloc/profile/profile_event.dart';
 import 'package:techblog/presentation/screens/login/login_screen.dart';
 import 'package:techblog/presentation/screens/profile/profile_screen.dart';
-import 'package:techblog/presentation/screens/item_views/blog_item_view.dart';
+import 'package:techblog/presentation/item_views/blog_item_view.dart';
 import 'package:techblog/presentation/screens/widgets/signin_button_view.dart';
 import 'package:techblog/presentation/screens/widgets/theme_button_view.dart';
 
@@ -304,7 +304,7 @@ class FeatureBlogItemView extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: CachedNetworkImage(
-                          imageUrl: "${blog.url}",
+                          imageUrl: "${blog.imageUrl}",
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -527,9 +527,6 @@ class _HomeWindowAppBarState extends State<HomeWindowAppBar> {
     );
   }
 }
-
-
-
 
 class WindowNavItemView extends StatefulWidget {
   const WindowNavItemView({
