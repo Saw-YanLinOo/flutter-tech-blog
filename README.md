@@ -1,12 +1,21 @@
 # techblog
 
-TechBlog project for Web & Mobile. Shared useful article for daliy. Make with flutter 
+TechBlog project for Web & Mobile. Shared useful articles for my daliy self-study. Make with flutter and responsive ui
 
 ## url
 
 website - https://yanyan-tech-blog.vercel.app
 
 android - https://play.google.com/store/apps/details?id=com.yanyan.techblog
+
+## UI
+
+<p float="left">
+  <img height="300" src="https://play-lh.googleusercontent.com/VViPTWkOAfUYPVusOXPdejn99nxs-eLv5zxt70_h3LRPl6MRij5P2ToCjK8j6vsiIV-6=w5120-h2880-rw">
+  <img height="300" src="https://play-lh.googleusercontent.com/yegvzAIFa8cB_TO1pZXBqxqkqD5ETVC3KB5nIeUMG9v7ZG21yS0_LZyzvhFpHTJwLQ=w5120-h2880-rw">
+  "   "
+  <img height="300" src="https://play-lh.googleusercontent.com/hl44_-4zjbGvWQtdAotDNGJ5H1578cMN_rkc6Pl70moI46micO8Nsji8uaQNJ4qjgTOO=w5120-h2880-rw">
+</p>
 
 ## Getting Started
 
