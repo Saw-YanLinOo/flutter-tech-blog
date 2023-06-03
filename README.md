@@ -11,10 +11,9 @@ android - https://play.google.com/store/apps/details?id=com.yanyan.techblog
 ## UI
 
 <p float="left">
-  <img height="300" src="https://play-lh.googleusercontent.com/VViPTWkOAfUYPVusOXPdejn99nxs-eLv5zxt70_h3LRPl6MRij5P2ToCjK8j6vsiIV-6=w5120-h2880-rw">
-  <img height="300" src="https://play-lh.googleusercontent.com/yegvzAIFa8cB_TO1pZXBqxqkqD5ETVC3KB5nIeUMG9v7ZG21yS0_LZyzvhFpHTJwLQ=w5120-h2880-rw">
-  "   "
-  <img height="300" src="https://play-lh.googleusercontent.com/hl44_-4zjbGvWQtdAotDNGJ5H1578cMN_rkc6Pl70moI46micO8Nsji8uaQNJ4qjgTOO=w5120-h2880-rw">
+  <img height="250" src="https://play-lh.googleusercontent.com/VViPTWkOAfUYPVusOXPdejn99nxs-eLv5zxt70_h3LRPl6MRij5P2ToCjK8j6vsiIV-6=w5120-h2880-rw">
+  <img height="250" src="https://play-lh.googleusercontent.com/yegvzAIFa8cB_TO1pZXBqxqkqD5ETVC3KB5nIeUMG9v7ZG21yS0_LZyzvhFpHTJwLQ=w5120-h2880-rw">
+  <img height="250" src="https://play-lh.googleusercontent.com/hl44_-4zjbGvWQtdAotDNGJ5H1578cMN_rkc6Pl70moI46micO8Nsji8uaQNJ4qjgTOO=w5120-h2880-rw">
 </p>
 
 ## Getting Started
