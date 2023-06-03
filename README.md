@@ -5,6 +5,7 @@ TechBlog project for Web & Mobile. Shared useful article for daliy. Make with fl
 ## url
 
 web - https://yanyan-tech-blog.vercel.app
+android - https://play.google.com/store/apps/details?id=com.yanyan.techblog
 
 ## Getting Started
 
