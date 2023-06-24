@@ -31,7 +31,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 .fvm/
-
+build/ios/
+build/android/
 # Symbolication related
 app.*.symbols
 

@@ -35,7 +35,7 @@ class _HomeMobileScreenState extends State<HomeMobileScreen> {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: HomeMobileAppBar(
                   onTapSearch: () {
                     isSearch = true;
